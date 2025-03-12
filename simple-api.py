@@ -1,16 +1,7 @@
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import FastAPI
 import random
 
 app = FastAPI()
-
-# API Key for authentication
-API_KEY = "1234567890"
-
-# Function to verify API Key
-def verify_api_key(apiKey: str):
-    if apiKey != API_KEY:
-        raise HTTPException(status_code=401, detail="Invalid API key")
-    return apiKey
 
 # List of side hustles
 side_hustles = [
@@ -42,11 +33,11 @@ money_quotes = [
 ]
 
 @app.get("/side_hustles")
-def get_side_hustle(apiKey: str = Depends(verify_api_key)):
+def get_side_hustle():
     """Returns a random side hustle idea"""
     return {"side_hustle": random.choice(side_hustles)}
 
 @app.get("/money_quotes")
-def get_money_quote(apiKey: str = Depends(verify_api_key)):
+def get_money_quote():
     """Returns a random money-related quote"""
     return {"money_quote": random.choice(money_quotes)}
